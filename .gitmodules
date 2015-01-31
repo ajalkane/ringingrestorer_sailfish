@@ -1,0 +1,6 @@
+[submodule "daemon/libiphb"]
+	path = daemon/libiphb
+	url = https://github.com/nemomobile/libiphb.git
+[submodule "daemon/nemo-keepalive"]
+	path = daemon/nemo-keepalive
+	url = https://github.com/nemomobile/nemo-keepalive.git
