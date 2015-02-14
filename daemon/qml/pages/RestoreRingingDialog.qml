@@ -95,6 +95,13 @@ Dialog {
             cancelText: "Cancel" + (cancelTimer.running ? " in " + cancelTimer.countDown + "s" : "");
         }
 
+        Label {
+            wrapMode: Text.WordWrap
+            horizontalAlignment: Text.AlignHCenter
+            width: parent.width
+            text: restoreSlider.label
+        }
+
         Slider {
             id: restoreSlider
             label: restoreText() // value + " minutes"

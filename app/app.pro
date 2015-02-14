@@ -26,9 +26,10 @@ HEADERS += controlclient.h \
 OTHER_FILES += qml/harbour-ringingrestorer.qml \
     qml/cover/CoverPage.qml \
     qml/pages/FirstPage.qml \
-    qml/pages/SecondPage.qml \
+    qml/pages/AboutPage.qml \
     translations/*.ts \
-    harbour-ringingrestorer.desktop
+    harbour-ringingrestorer.desktop \
+    qml/pages/AboutPage.qml
 
 # to disable building translations every time, comment out the
 # following CONFIG line

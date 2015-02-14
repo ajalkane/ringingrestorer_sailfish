@@ -16,32 +16,18 @@
  * You should have received a copy of the GNU General Public License
  * along with RingingRestorer.  If not, see <http://www.gnu.org/licenses/>
 **/
-#ifndef CONTROLCLIENT_H
-#define CONTROLCLIENT_H
+import QtQuick 2.0
+import Sailfish.Silica 1.0
 
-#include <QObject>
-#include <QList>
-#include <QtDBus/QtDBus>
 
-class ControlClient : public QObject
-{
-    Q_OBJECT
-
-    QDBusInterface *dbus_iface;
-public:
-    explicit ControlClient(QObject *parent = 0);
-    ~ControlClient();
-
-    bool isActive() const;
-    void setActive(bool isActive);
-
-    // Returns QDBusError::ErrorType of last call. 0 is no error.
-    int lastError() const;
-signals:
-    void activeChanged(bool);
-    void started();
-    void stopped();
-public slots:
-};
-
-#endif // CONTROLCLIENT_H
+Page {
+    Label {
+        wrapMode: Text.WordWrap
+        horizontalAlignment: Text.AlignHCenter
+        anchors.centerIn: parent
+        width: parent.width
+        text: "RingingRestorer\n"
+              + "(c) Arto Jalkanen 2015\n"
+              + "e-mail: ajalkane@gmail.com"
+    }
+}
