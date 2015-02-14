@@ -10,7 +10,8 @@ QT += gui-private
 QMAKE_CXXFLAGS += -std=c++0x
 
 DEFINES += APP_VERSION=\\\"$$VERSION\\\"
-DEFINES += RR_TESTING
+# If defined, restoring happens in seconds instead of in minutes
+# DEFINES += RR_TESTING
 
 SOURCES += main.cpp \
     logic/profilechangewatcher.cpp \
@@ -18,7 +19,8 @@ SOURCES += main.cpp \
     qmlbackend.cpp \
     profileclient.cpp \
     preferences.cpp \
-    configuration.cpp
+    configuration.cpp \
+    systemalignedtimer.cpp
 
 HEADERS += \
     logic/profilechangewatcher.h \
@@ -26,17 +28,35 @@ HEADERS += \
     qmlbackend.h \
     profileclient.h \
     preferences.h \
-    configuration.h
+    configuration.h \
+    systemalignedtimer.h
 
 OTHER_FILES += \
     qml/main.qml \
     qml/cover/CoverPage.qml \
-    qml/pages/FirstPage.qml \
-    qml/pages/SecondPage.qml
+    qml/pages/FirstPage.qml
 
 # libiphb sources
 SOURCES += libiphb/src/libiphb.c
 HEADERS += libiphb/src/libiphb.h libiphb/src/iphb_internal.h
+LIBS += -lrt
+
+# nemo-keepalive's heartbeat sources (required by heartbeat)
+SOURCES += nemo-keepalive/lib/heartbeat.cpp
+HEADERS += nemo-keepalive/lib/heartbeat.h
+INCLUDEPATH += $$PWD/include
+
+# BackgroundActivity
+system(qdbusxml2cpp -p generated/mceiface/mceiface.h:generated/mceiface/mceiface.cpp nemo-keepalive/lib/mceiface.xml)
+# system(qdbusxml2cpp -p nemo-keepalive/lib/mceiface.h:nemo-keepalive/lib/mceiface.cpp nemo-keepalive/lib/mceiface.xml)
+# INCLUDEPATH += $$PWD/include
+#SOURCES += nemo-keepalive/lib/backgroundactivity.cpp \
+#           nemo-keepalive/lib/backgroundactivity_p.cpp \
+#           generated/mceiface/mceiface.cpp
+#HEADERS += nemo-keepalive/lib/backgroundactivity.h \
+#           nemo-keepalive/lib/backgroundactivity_p.h \
+#           generated/mceiface/mceiface.h
+
 # PKGCONFIG += libiphb
 
 # INSTALLS += target ringingrestorerd qml # daemon_qmlfiles

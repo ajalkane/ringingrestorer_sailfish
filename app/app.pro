@@ -14,7 +14,14 @@ TARGET = harbour-ringingrestorer
 
 CONFIG += sailfishapp
 
-SOURCES += harbour-ringingrestorer.cpp
+QT += dbus
+
+SOURCES += harbour-ringingrestorer.cpp \
+    controlclient.cpp \
+    qmlbackend.cpp
+
+HEADERS += controlclient.h \
+    qmlbackend.h
 
 OTHER_FILES += qml/harbour-ringingrestorer.qml \
     qml/cover/CoverPage.qml \

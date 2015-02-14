@@ -16,39 +16,41 @@
  * You should have received a copy of the GNU General Public License
  * along with RingingRestorer.  If not, see <http://www.gnu.org/licenses/>
 **/
-#ifndef PROFILECHANGEWATCHER_H
-#define PROFILECHANGEWATCHER_H
+#ifndef SYSTEMALIGNEDTIMER_H
+#define SYSTEMALIGNEDTIMER_H
 
 #include <QObject>
-#include <QString>
+#include <QDateTime>
+#include "nemo-keepalive/heartbeat.h"
 
-#include "../profileclient.h"
-#include "../preferences.h"
-#include "../systemalignedtimer.h"
-
-class ProfileChangeWatcher : public QObject
+/**
+ * @brief System aligned timeouts.
+ *
+ * Ensures timeouts happen as soon as possible in the specified time. Ensures timeouts do not happen before
+ * before the specified timeout.
+ *
+ * When exactly the timeout is invoked depends on underlying system's timeout resolution. On sailfish it is 30 seconds,
+ * so the timeout can be as much as 30 seconds after the specified target time.
+ */
+class SystemAlignedTimer : public QObject
 {
     Q_OBJECT
 
-    ProfileClient *_profileClient;
-    QString _currentProfile;
-    QString _restoreProfile;
-    SystemAlignedTimer _timer;
-    int _restoreVolume;
-    Preferences *_preferences;
+    QDateTime _targetTime;
+    Heartbeat _heartbeat;
 
+    void _scheduleNextWakeup(const QDateTime &now);
+    int _calculateNearestSlot(quint64 secsTo) const ;
 public:
-    ProfileChangeWatcher(ProfileClient *profileClient, Preferences *preferences, QObject *parent = 0);
+    SystemAlignedTimer(QObject *parent = 0);
 
-    void restoreRingingIn(int minutes, int volume);
-    void stopRestore();
+    void start(int secs);
+    void stop();
 signals:
-    void restoreRingingRequested();
-public slots:
-    void profileChanged(const QString &profile);
-    // void restoreRinging(int inSeconds);
+    void timeout();
+
 private slots:
-    void _restoreRinging();
+    void hbTimeout();
 };
 
-#endif // PROFILECHANGEWATCHER_H
+#endif // SYSTEMALIGNEDTIMER_H

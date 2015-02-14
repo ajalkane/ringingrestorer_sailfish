@@ -1,0 +1,8 @@
+harbour-ringingrestorer.pro.user
+
+daemon/generated
+
+*~
+
+*.autosave
+
