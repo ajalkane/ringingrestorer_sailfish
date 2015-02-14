@@ -4,3 +4,5 @@
 [submodule "daemon/nemo-keepalive"]
 	path = daemon/nemo-keepalive
 	url = https://github.com/nemomobile/nemo-keepalive.git
+	# This because nemo-keepalive generates dbus interfaces
+	ignore = dirty

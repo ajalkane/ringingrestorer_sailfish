@@ -16,23 +16,32 @@
  * You should have received a copy of the GNU General Public License
  * along with RingingRestorer.  If not, see <http://www.gnu.org/licenses/>
 **/
-#ifndef CONFIGURATION_H
-#define CONFIGURATION_H
+import QtQuick 2.0
+import Sailfish.Silica 1.0
 
-#include <QString>
-#include <QList>
-#include <QSettings>
+CoverBackground {
+    Label {
+        id: label
+        horizontalAlignment: Text.AlignHCenter
+        width: parent.width
+        // anchors.centerIn: parent
+        wrapMode: Text.WordWrap
+        text: backend.daemonActive ? "RingingRestorer active"
+                                   : "RingingRestorer disabled"
+    }
 
-#include "preferences.h"
+    CoverActionList {
+        id: coverAction
 
-class Configuration
-{
-public:
-    Configuration();
+        CoverAction {
+            iconSource: backend.daemonActive ? "image://theme/icon-cover-pause"
+                                             : "image://theme/icon-cover-play"
+            onTriggered: {
+                console.log("CoverAction triggered")
+                backend.daemonActive = !backend.daemonActive
+            }
+        }
+    }
+}
 
-    static void writePreferences(const Preferences &preferences);
-    static void readPreferences(Preferences &preferences);
 
-};
-
-#endif // CONFIGURATION_H

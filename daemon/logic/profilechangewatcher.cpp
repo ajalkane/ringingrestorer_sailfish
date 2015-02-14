@@ -1,3 +1,21 @@
+/**********************************************************************
+ * Copyright 2015 Arto Jalkanen
+ *
+ * This file is part of RingingRestorer.
+ *
+ * RingingRestorer is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * RingingRestorer is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with RingingRestorer.  If not, see <http://www.gnu.org/licenses/>
+**/
 #include "profilechangewatcher.h"
 #include "../configuration.h"
 
@@ -9,7 +27,6 @@ ProfileChangeWatcher::ProfileChangeWatcher(ProfileClient *profileClient, Prefere
     QObject(parent), _profileClient(profileClient), _restoreVolume(40), _preferences(preferences)
 {
     _currentProfile = _profileClient->getProfile();
-    _timer.setSingleShot(true);
 
     connect(&_timer, SIGNAL(timeout()), this, SLOT(_restoreRinging()));
 }
@@ -68,9 +85,9 @@ ProfileChangeWatcher::restoreRingingIn(int minutes, int volume) {
     _timer.stop();
 #ifdef RR_TESTING
     qDebug("ProfileChangeWatcher::restoreRingingIn::RR_TESTING, using minutes as seconds");
-    _timer.start(minutes * 1000);
+    _timer.start(minutes);
 #else
-    _timer.start(minutes * 60 * 1000);
+    _timer.start(minutes * 60);
 #endif
     _restoreVolume = volume;
 }

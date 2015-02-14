@@ -1,60 +1,21 @@
-/*
-#include <QtGui/QApplication>
-#include <QtDeclarative>
-
-#include <QtCore/QStringList>
-#include <QtCore/QFileInfo>
-
-#include <QObject>
-#include <QList>
-
-#include <MComponentData>
-
-#include "profileclient.h"
-#include "configuration.h"
-#include "preferences.h"
-#include "qmlbackend.h"
-#include "logic/profilechangewatcher.h"
-#include "interface/controlinterface.h"
-
-#include "qmlapplicationviewer.h"
-
-int main(int argc, char *argv[])
-{
-    QScopedPointer<QApplication> app(createApplication(argc, argv));
-    QScopedPointer<QmlApplicationViewer> viewer(QmlApplicationViewer::create());
-    MComponentData::createInstance(argc, argv);
-
-    ProfileClient profileClient;
-    Preferences preferences;
-    Configuration::readPreferences(preferences);
-    ProfileChangeWatcher profileChangeWatcher(&profileClient, &preferences);
-    QmlBackend qmlBackend(&profileChangeWatcher, &(*viewer));
-    ControlInterface interface(&preferences, &profileChangeWatcher);
-
-    if (interface.init()) {
-        fprintf(stderr, "Exiting\n");
-        return -1;
-    }
-
-    profileChangeWatcher.connect(&profileClient, SIGNAL(profileChanged(QString)), &profileChangeWatcher, SLOT(profileChanged(QString)));
-    QDeclarativeContext *ctxt = viewer->rootContext();
-
-    ctxt->setContextProperty("backend", &qmlBackend);
-    viewer->setOrientation(QmlApplicationViewer::ScreenOrientationAuto);
-    viewer->setMainQmlFile(QLatin1String("qml/mainDaemon.qml"));
-
-    int retVal = 0;
-    // Here's a loop because when the daemon window is closed, the application event loop is exited.
-    // There's probably a more proper way to do this, but this works and so is sufficient for now.
-    while (retVal == 0) {
-        retVal = app->exec();
-    }
-
-    return retVal;
-}
-*/
-
+/**********************************************************************
+ * Copyright 2015 Arto Jalkanen
+ *
+ * This file is part of RingingRestorer.
+ *
+ * RingingRestorer is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * RingingRestorer is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with RingingRestorer.  If not, see <http://www.gnu.org/licenses/>
+**/
 #include <QtQuick>
 #include <QtDebug>
 
@@ -96,7 +57,6 @@ int main(int argc, char *argv[])
     view->setSource(SailfishApp::pathTo("qml/main.qml"));
 
     profileChangeWatcher.connect(&profileClient, SIGNAL(profileChanged(QString)), &profileChangeWatcher, SLOT(profileChanged(QString)));
-
 
     int retVal = 0;
     // Here's a loop because when the daemon window is closed, the application event loop is exited.

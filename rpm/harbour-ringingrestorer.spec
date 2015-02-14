@@ -66,6 +66,30 @@ desktop-file-install --delete-original       \
   --dir %{buildroot}%{_datadir}/applications             \
    %{buildroot}%{_datadir}/applications/*.desktop
 
+%pre
+# >> pre
+su nemo -c "systemctl --user stop %{name}d"
+exit 0
+# << pre
+
+%preun
+# >> preun
+su nemo -c "systemctl --user disable %{name}d"
+su nemo -c "systemctl --user stop %{name}d"
+# << preun
+
+%post
+# >> post
+su nemo -c "systemctl --user daemon-reload"
+su nemo -c "systemctl --user enable %{name}d"
+su nemo -c "systemctl --user start %{name}d"
+# << post
+
+%postun
+# >> postun
+su nemo -c "systemctl --user daemon-reload"
+# << postun
+
 %files
 %defattr(-,root,root,-)
 %{_bindir}

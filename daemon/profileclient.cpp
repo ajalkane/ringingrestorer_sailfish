@@ -1,20 +1,20 @@
 /**********************************************************************
- * Copyright 2011 Arto Jalkanen
+ * Copyright 2015 Arto Jalkanen
  *
- * This file is part of ProfileMatic.
+ * This file is part of RingingRestorer.
  *
- * ProfileMatic is free software: you can redistribute it and/or modify
+ * RingingRestorer is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * ProfileMatic is distributed in the hope that it will be useful,
+ * RingingRestorer is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with ProfileMatic.  If not, see <http://www.gnu.org/licenses/>
+ * along with RingingRestorer.  If not, see <http://www.gnu.org/licenses/>
 **/
 #include <QtCore/QStringList>
 #include <QtDBus/QtDBus>
@@ -146,60 +146,6 @@ ProfileClient::getProfileType(const QString &profile) const {
 
     return QString();
 }
-
-//QStringList
-//ProfileClient::profilesWithType() const
-//{
-//    QDBusInterface dbus_iface(PROFILED_SERVICE, PROFILED_PATH,
-//                              PROFILED_INTERFACE);
-
-//    QStringList profilesWithType;
-//    QString profile;
-//    foreach (profile, profiles())
-//    {
-//        QDBusReply<QString> reply = dbus_iface.call(PROFILED_GET_VALUE, profile, PROFILED_TYPE_VALUE);
-//        QString profileWithType = profile;
-//        profileWithType.append(" (");
-//        profileWithType.append(reply.value());
-//        profileWithType.append(")");
-//        profilesWithType.append(profileWithType);
-//    }
-
-//    return profilesWithType;
-//}
-
-//QStringList
-//ProfileClient::profileTypes() const
-//{
-//    QDBusInterface dbus_iface(PROFILED_SERVICE, PROFILED_PATH,
-//                              PROFILED_INTERFACE);
-
-//    QStringList profileTypes;
-//    QString profile;
-//    foreach (profile, profiles())
-//    {
-//        QDBusReply<QString> reply = dbus_iface.call(PROFILED_GET_VALUE, profile, PROFILED_TYPE_VALUE);
-//        if (reply.isValid()) {
-//            profileTypes.append(reply.value());
-//        }
-//    }
-
-//    // In Harmattan at least, profile type Ringing is attached to
-//    // "general" and "outdoors" profiles. The "general" profile is
-//    // the one that's used for "ringing", profile "outdoors" should
-//    // not be used when setting a profile.
-//    profileTypes.removeDuplicates();
-
-//    qDebug("Add");
-//    // Test data for desktop
-//#ifndef __arm__
-//    profileTypes.append("Profile 1");
-//    profileTypes.append("Profile 2");
-//    profileTypes.append("Profile 3");
-//#endif
-
-//    return profileTypes;
-//}
 
 void
 ProfileClient::profileChanged(bool changed, bool active, QString profile)

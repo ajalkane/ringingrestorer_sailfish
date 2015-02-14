@@ -16,23 +16,14 @@
  * You should have received a copy of the GNU General Public License
  * along with RingingRestorer.  If not, see <http://www.gnu.org/licenses/>
 **/
-#ifndef CONFIGURATION_H
-#define CONFIGURATION_H
+import QtQuick 2.0
+import Sailfish.Silica 1.0
+import "pages"
 
-#include <QString>
-#include <QList>
-#include <QSettings>
-
-#include "preferences.h"
-
-class Configuration
+ApplicationWindow
 {
-public:
-    Configuration();
+    initialPage: Component { FirstPage { } }
+    cover: Qt.resolvedUrl("cover/CoverPage.qml")
+}
 
-    static void writePreferences(const Preferences &preferences);
-    static void readPreferences(Preferences &preferences);
 
-};
-
-#endif // CONFIGURATION_H
