@@ -53,7 +53,7 @@ Page {
                 top: controlButton.bottom
                 topMargin: controlButton.height / 2
             }
-            text: "RingingRestorer backend is not running. If you have just started your phone, close this application, wait a couple of minutes, and then start the application again."
+            text: "RingingRestorer backend is not running. If you have just started your phone, close this application, wait a couple of minutes, and then try starting the application again."
             visible: !backend.daemonRunning
         }
 
