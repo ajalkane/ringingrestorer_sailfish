@@ -28,6 +28,7 @@ Page {
         width: parent.width
         text: "RingingRestorer\n"
               + "(c) Arto Jalkanen 2015\n"
-              + "e-mail: ajalkane@gmail.com"
+              + "e-mail: ajalkane@gmail.com\n\n"
+              + "RingingRestorer icon by ssahla"
     }
 }

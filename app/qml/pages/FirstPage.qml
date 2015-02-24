@@ -66,7 +66,7 @@ Page {
                 top: controlButton.bottom
                 topMargin: controlButton.height / 2
             }
-            text: backend.daemonActive ? "RingingRestorer is active. When profile changed from ringing to beep or silent, will ask how long until ringing resumed."
+            text: backend.daemonActive ? "RingingRestorer is active. When profile changed from ringing to silent, will ask how long until ringing resumed."
                                        : "RingingRestorer is not active"
             visible: backend.daemonRunning
         }
