@@ -50,6 +50,15 @@ public slots:
     void daemonActiveChanged(bool active);
     void daemonStarted();
     void daemonStopped();
+
+    inline bool isJollaStoreCrippled() const {
+#ifdef RR_JOLLA_STORE_CRIPPLED
+        return true;
+#else
+        return false;
+#endif
+    }
+
 };
 
 #endif // QMLBACKEND_H

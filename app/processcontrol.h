@@ -16,25 +16,26 @@
  * You should have received a copy of the GNU General Public License
  * along with RingingRestorer.  If not, see <http://www.gnu.org/licenses/>
 **/
-import QtQuick 2.0
-import Sailfish.Silica 1.0
+#ifndef PROCESSCONTROL_H
+#define PROCESSCONTROL_H
 
+#include <QObject>
+#include <QString>
 
-Page {
-    Label {
-        textFormat: Text.RichText
-        wrapMode: Text.WordWrap
-        horizontalAlignment: Text.AlignHCenter
-        anchors.centerIn: parent
-        width: parent.width
-        text: "RingingRestorer\n"
-              + "(c) Arto Jalkanen 2015<br>"
-              + "e-mail: ajalkane@gmail.com<p>"
-              + "RingingRestorer icon by ssahla<p>"
-              + '<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=499LF83BBX5RY">'
-              + "Please donate if you like this application</a>"
-        onLinkActivated: {
-            Qt.openUrlExternally(link)
-        }
-    }
-}
+class ProcessControl : public QObject
+{
+    Q_OBJECT
+
+    QString _pathToBinary;
+
+    inline QString _pathToBinaryMatch() { return "^" + _pathToBinary + "$"; }
+public:
+    explicit ProcessControl(QString pathToBinary, QObject *parent = 0);
+
+    bool startIfNotRunning();
+
+    bool isRunning();
+    bool start();
+};
+
+#endif // PROCESSCONTROL_H

@@ -10,8 +10,8 @@ QT += gui-private
 QMAKE_CXXFLAGS += -std=c++0x
 
 DEFINES += APP_VERSION=\\\"$$VERSION\\\"
-# If defined, restoring happens in seconds instead of in minutes
-# DEFINES += RR_TESTING
+
+include("../harbour-ringingrestorer-defines.pri")
 
 SOURCES += main.cpp \
     logic/profilechangewatcher.cpp \
@@ -68,7 +68,7 @@ target.path = /usr/bin
 qml.files = qml
 qml.path = /usr/share/$${TARGET}
 
-INSTALLS += qml target ringingrestorerd
+INSTALLS += qml target
 
 CONFIG += link_pkgconfig
 PKGCONFIG += sailfishapp
@@ -76,6 +76,10 @@ INCLUDEPATH += /usr/include/sailfishapp
 
 # End of workaround
 
-ringingrestorerd.files = $${TARGET}.service
-ringingrestorerd.path = /usr/lib/systemd/user
+!contains(DEFINES, RR_JOLLA_STORE_CRIPPLED) {
+    ringingrestorerd.files = $${TARGET}.service
+    ringingrestorerd.path = /usr/lib/systemd/user
+
+    INSTALLS += ringingrestorerd
+}
 

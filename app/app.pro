@@ -16,12 +16,19 @@ CONFIG += sailfishapp
 
 QT += dbus
 
+include("../harbour-ringingrestorer-defines.pri")
+
 SOURCES += harbour-ringingrestorer.cpp \
     controlclient.cpp \
     qmlbackend.cpp
 
 HEADERS += controlclient.h \
     qmlbackend.h
+
+contains(DEFINES, RR_JOLLA_STORE_CRIPPLED) {
+    SOURCES += processcontrol.cpp
+    HEADERS += processcontrol.h
+}
 
 OTHER_FILES += qml/harbour-ringingrestorer.qml \
     qml/cover/CoverPage.qml \

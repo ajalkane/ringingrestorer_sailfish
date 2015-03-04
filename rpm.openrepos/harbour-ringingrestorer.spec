@@ -68,20 +68,27 @@ desktop-file-install --delete-original       \
 
 %pre
 # >> pre
-su nemo -c 'pkill -f ^/usr/bin/harbour-ringingrestorerd$'
+su nemo -c "systemctl --user stop %{name}d"
 exit 0
 # << pre
 
 %preun
 # >> preun
-su nemo -c 'pkill -f ^/usr/bin/harbour-ringingrestorerd$'
-# For example after rebooting the daemon is not ran before application is started. So discard errors due to not being able to kill daemon
-exit 0
+su nemo -c "systemctl --user disable %{name}d"
+su nemo -c "systemctl --user stop %{name}d"
 # << preun
 
 %post
+# >> post
+su nemo -c "systemctl --user daemon-reload"
+su nemo -c "systemctl --user enable %{name}d"
+su nemo -c "systemctl --user start %{name}d"
+# << post
 
 %postun
+# >> postun
+su nemo -c "systemctl --user daemon-reload"
+# << postun
 
 %files
 %defattr(-,root,root,-)
@@ -90,5 +97,6 @@ exit 0
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/hicolor/86x86/apps/%{name}.png
 %{_datadir}/%{name}d
+%{_libdir}/systemd/user/%{name}d.service
 # >> files
 # << files

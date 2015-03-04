@@ -25,6 +25,7 @@ Page {
 
     SilicaFlickable {
         anchors.fill: parent
+        contentHeight: content.height
 
         PullDownMenu {
             MenuItem {
@@ -33,43 +34,57 @@ Page {
             }
         }
 
-        Button {
-            id: controlButton
-            anchors.centerIn: parent;
-            height: 80;
-            text: !backend.daemonActive ? "Start RingingRestorer" : "Stop RingingRestorer"
-            visible: backend.daemonRunning
-            onClicked: {
-                backend.daemonActive = !backend.daemonActive
-            }
-        }
-
-        Label {
-            wrapMode: Text.WordWrap
-            horizontalAlignment: Text.AlignHCenter
+        Column {
+            id: content
             width: parent.width
-            anchors {
-                horizontalCenter: parent.horizontalCenter
-                top: controlButton.bottom
-                topMargin: controlButton.height / 2
-            }
-            text: "RingingRestorer backend is not running. If you have just started your phone, close this application, wait a couple of minutes, and then try starting the application again."
-            visible: !backend.daemonRunning
-        }
+            spacing: 50
 
-        Label {
-            wrapMode: Text.WordWrap
-            horizontalAlignment: Text.AlignHCenter
-            width: parent.width
-            anchors {
-                horizontalCenter: parent.horizontalCenter
-                top: controlButton.bottom
-                topMargin: controlButton.height / 2
+            Item {
+              height: Theme.paddingLarge
+              width: 1 // must be non zero
             }
-            text: backend.daemonActive ? "RingingRestorer is active. When profile changed from ringing to silent, will ask how long until ringing resumed."
-                                       : "RingingRestorer is not active"
-            visible: backend.daemonRunning
-        }
+
+            Button {
+                id: controlButton
+                anchors.horizontalCenter: parent.horizontalCenter
+
+                height: 80;
+                text: !backend.daemonActive ? "Start RingingRestorer" : "Stop RingingRestorer"
+                visible: backend.daemonRunning
+                onClicked: {
+                    backend.daemonActive = !backend.daemonActive
+                }
+            }
+
+            Label {
+                wrapMode: Text.WordWrap
+                horizontalAlignment: Text.AlignHCenter
+                width: parent.width
+                text: !backend.isJollaStoreCrippled()
+                      ? "RingingRestorer backend is not running. If you have just started your phone, close this application, wait a couple of minutes, and then try starting the application again."
+                      : "RingingRestorer backend is not running. Try quitting application and starting again."
+                visible: !backend.daemonRunning
+            }
+
+            Label {
+                id: ringingRestoreActiveStatus
+                wrapMode: Text.WordWrap
+                horizontalAlignment: Text.AlignHCenter
+                width: parent.width
+                text: backend.daemonActive ? "RingingRestorer is active. When profile changed from ringing to silent, will ask how long until ringing resumed."
+                                           : "RingingRestorer is not active"
+                visible: backend.daemonRunning
+            }
+
+            Label {
+                wrapMode: Text.WordWrap
+                horizontalAlignment: Text.AlignHCenter
+                width: parent.width
+                text: "RingingRestorer is running. You can close this application and RingingRestorer stays active in background. "
+                    + "If you reboot your phone, you will have to start the application again once for RingingRestorer to become active."
+                visible: backend.daemonRunning && backend.daemonActive && backend.isJollaStoreCrippled()
+            }
+        } // Row
     }
 }
 

@@ -22,8 +22,18 @@
 #include "controlclient.h"
 #include "qmlbackend.h"
 
+#ifdef RR_JOLLA_STORE_CRIPPLED
+#include "processcontrol.h"
+#define DAEMON_PATH "/usr/bin/harbour-ringingrestorerd"
+#endif
+
 int main(int argc, char *argv[])
 {
+#ifdef RR_JOLLA_STORE_CRIPPLED
+    ProcessControl daemonControl(DAEMON_PATH);
+    daemonControl.startIfNotRunning();
+#endif
+
     qDebug() << Q_FUNC_INFO << "Starting ringingrestorer app";
     QScopedPointer<QGuiApplication> app(SailfishApp::application(argc, argv));
     QScopedPointer<QQuickView> view(SailfishApp::createView());
