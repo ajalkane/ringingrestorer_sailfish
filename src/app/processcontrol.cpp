@@ -44,7 +44,9 @@ ProcessControl::startIfNotRunning() {
 bool
 ProcessControl::isRunning() {
     qDebug() << Q_FUNC_INFO;
-    int ret = QProcess::execute("pgrep -f " + _pathToBinaryMatch());
+    QStringList args;
+    args << "-f" << _pathToBinaryMatch();
+    int ret = QProcess::execute("pgrep", args);
     qDebug() << Q_FUNC_INFO << "return value " << ret << "which means running " << (ret == 0 ? true : false);
     return ret == 0 ? true : false;
 }

@@ -1,8 +1,6 @@
-[submodule "daemon/libiphb"]
-	path = daemon/libiphb
-	url = https://github.com/nemomobile/libiphb.git
-[submodule "daemon/nemo-keepalive"]
-	path = daemon/nemo-keepalive
+[submodule "src/daemon/nemo-keepalive"]
+	path = src/daemon/nemo-keepalive
 	url = https://github.com/nemomobile/nemo-keepalive.git
-	# This because nemo-keepalive generates dbus interfaces
-	ignore = dirty
+[submodule "src/daemon/libiphb"]
+	path = src/daemon/libiphb
+	url = https://github.com/nemomobile/libiphb.git

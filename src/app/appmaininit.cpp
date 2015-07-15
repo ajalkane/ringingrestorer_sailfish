@@ -1,4 +1,4 @@
-/*/**********************************************************************
+/**********************************************************************
  * Copyright 2015 Arto Jalkanen
  *
  * This file is part of RingingRestorer.
@@ -19,16 +19,18 @@
 #include <QtQuick>
 #include <sailfishapp.h>
 
+#include "appmaininit.h"
+
 #include "controlclient.h"
 #include "qmlbackend.h"
 
 #ifdef RR_JOLLA_STORE_CRIPPLED
 #include "processcontrol.h"
-#define DAEMON_PATH "/usr/bin/harbour-ringingrestorerd"
+#define DAEMON_PATH "/usr/bin/harbour-ringingrestorer -d"
 #endif
 
-int main(int argc, char *argv[])
-{
+int
+AppMainInit::main(int argc, char *argv[]) {
 #ifdef RR_JOLLA_STORE_CRIPPLED
     ProcessControl daemonControl(DAEMON_PATH);
     daemonControl.startIfNotRunning();
@@ -42,8 +44,7 @@ int main(int argc, char *argv[])
     QmlBackend qmlBackend(&controlClient);
 
     view->rootContext()->setContextProperty("backend", &qmlBackend);
-    view->setSource(SailfishApp::pathTo("qml/harbour-ringingrestorer.qml"));
+    view->setSource(SailfishApp::pathTo("qml/app/harbour-ringingrestorer.qml"));
     view->show();
     return app->exec();
 }
-

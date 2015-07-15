@@ -16,15 +16,15 @@
  * You should have received a copy of the GNU General Public License
  * along with RingingRestorer.  If not, see <http://www.gnu.org/licenses/>
 **/
-#ifndef QMLBACKEND_H
-#define QMLBACKEND_H
+#ifndef QMLDAEMONBACKEND_H
+#define QMLDAEMONBACKEND_H
 
 #include <QObject>
 #include <QtQuick>
 
 #include "logic/profilechangewatcher.h"
 
-class QmlBackend : public QObject
+class QmlDaemonBackend : public QObject
 {
     Q_OBJECT
 
@@ -32,7 +32,7 @@ class QmlBackend : public QObject
     QQuickView *_quickView;
 
 public:
-    explicit QmlBackend(ProfileChangeWatcher *profileChangeWatcher,
+    explicit QmlDaemonBackend(ProfileChangeWatcher *profileChangeWatcher,
                         QQuickView *quickView,
                         QObject *parent = 0);
 
@@ -45,4 +45,4 @@ public slots:
     QString timeCurrentPlusMinutes(int minutes);
 };
 
-#endif // QMLBACKEND_H
+#endif // QMLDAEMONBACKEND_H

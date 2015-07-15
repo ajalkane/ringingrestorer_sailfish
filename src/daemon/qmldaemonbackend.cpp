@@ -26,9 +26,9 @@
 // until this API makes it into a Qt release: QT += gui-private
 #include <qpa/qplatformnativeinterface.h>
 
-#include "qmlbackend.h"
+#include "qmldaemonbackend.h"
 
-QmlBackend::QmlBackend(ProfileChangeWatcher *profileChangeWatcher,
+QmlDaemonBackend::QmlDaemonBackend(ProfileChangeWatcher *profileChangeWatcher,
                        QQuickView *quickView,
                        QObject *parent) :
     QObject(parent),
@@ -39,7 +39,7 @@ QmlBackend::QmlBackend(ProfileChangeWatcher *profileChangeWatcher,
 }
 
 void
-QmlBackend::showTimeoutDialog() {
+QmlDaemonBackend::showTimeoutDialog() {
     qDebug() << Q_FUNC_INFO;
     // Try making window get focus and appear
     //_quickView->close();
@@ -69,20 +69,20 @@ QmlBackend::showTimeoutDialog() {
 }
 
 void
-QmlBackend::restoreRingingIn(int minutes, int volume) {
+QmlDaemonBackend::restoreRingingIn(int minutes, int volume) {
     qDebug() << Q_FUNC_INFO << "restoreRingingIn" << minutes << "minutes, " << "volume" << volume;
     _quickView->close();
     _profileChangeWatcher->restoreRingingIn(minutes, volume);
 }
 
 void
-QmlBackend::close() {
+QmlDaemonBackend::close() {
     qDebug() << Q_FUNC_INFO;
     _quickView->close();
 }
 
 QString
-QmlBackend::timeCurrentPlusMinutes(int minutes) {
+QmlDaemonBackend::timeCurrentPlusMinutes(int minutes) {
     QTime result = QTime::currentTime();
     result = result.addSecs(minutes * 60);
     return result.toString("hh:mm");

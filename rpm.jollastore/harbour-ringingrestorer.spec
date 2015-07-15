@@ -35,7 +35,6 @@ BuildRequires:  desktop-file-utils
 %description
 When changing to silent profile, RingingRestorer will display a dialog where you can quickly set when to restore ringing again.
 
-
 %prep
 %setup -q -n %{name}-%{version}
 
@@ -66,29 +65,11 @@ desktop-file-install --delete-original       \
   --dir %{buildroot}%{_datadir}/applications             \
    %{buildroot}%{_datadir}/applications/*.desktop
 
-%pre
-# >> pre
-su nemo -c 'pkill -f ^/usr/bin/harbour-ringingrestorerd$'
-exit 0
-# << pre
-
-%preun
-# >> preun
-su nemo -c 'pkill -f ^/usr/bin/harbour-ringingrestorerd$'
-# For example after rebooting the daemon is not ran before application is started. So discard errors due to not being able to kill daemon
-exit 0
-# << preun
-
-%post
-
-%postun
-
 %files
 %defattr(-,root,root,-)
 %{_bindir}
 %{_datadir}/%{name}
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/hicolor/86x86/apps/%{name}.png
-%{_datadir}/%{name}d
 # >> files
 # << files
