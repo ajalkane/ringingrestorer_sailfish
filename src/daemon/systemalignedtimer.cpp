@@ -92,14 +92,16 @@ SystemAlignedTimer::_calculateNearestSlot(quint64 secsTo) const {
     uint lastSlot = 30; // Failsafe, the for loop should always run
     for (; iter != secsToSlotMap.constEnd(); ++iter) {
         qDebug() << Q_FUNC_INFO << "considering sec" << iter.key() << "against slot" << iter.value();
-        if (secsTo <= iter.key()) {
-            qDebug() << Q_FUNC_INFO  << "chose slot" << iter.value();
-            return iter.value();
+        // Choose closest slot that isn't greater than target time, so that we prefer to wake up
+        // too early and reschedule rather than missing our target by a longshot.
+        if (secsTo < iter.key()) {
+            break;
         }
         lastSlot = iter.value();
     }
 
-    qDebug() << Q_FUNC_INFO  << "iterated to end, choosing last slot" << lastSlot;
+    qDebug() << Q_FUNC_INFO  << "chose slot" << lastSlot;
+
     return lastSlot;
 }
 
