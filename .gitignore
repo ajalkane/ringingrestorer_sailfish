@@ -1,6 +1,6 @@
 harbour-ringingrestorer.pro.user
 
-daemon/generated
+src/daemon/generated
 
 *~
 
