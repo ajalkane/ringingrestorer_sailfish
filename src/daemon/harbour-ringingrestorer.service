@@ -1,0 +1,10 @@
+[Unit]
+Description=Ringing restorer service
+After=pre-user-session.target
+
+[Service]
+ExecStart=/usr/bin/harbour-ringingrestorer -d
+Restart=always
+
+[Install]
+WantedBy=user-session.target

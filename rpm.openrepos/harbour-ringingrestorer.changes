@@ -1,4 +1,5 @@
-* Sat Mar 4 2015 Arto Jalkanen <ajalkane@gmail.com> 1.0-4
+* Sat Jul 23 2015 Arto Jalkanen <ajalkane@gmail.com> 1.1-1
+- Fixed bug that could delay restoration of ringing profile
 - Support for Jolla Store version.
 - Link in About dialog to donations
 

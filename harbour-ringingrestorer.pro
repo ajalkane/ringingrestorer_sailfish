@@ -1,4 +1,5 @@
-DEFINES += RR_JOLLA_STORE_CRIPPLED
+# Enable RR_JOLLA_STORE_CRIPPLEd to build a version for Jolla Store
+# DEFINES += RR_JOLLA_STORE_CRIPPLED
 # If RR_TESTING enabled then restoration happens in seconds instead of minutes (ie. 60 times faster than what is selected)
 # DEFINES += RR_TESTING
 
@@ -58,7 +59,8 @@ OTHER_FILES += qml/app/harbour-ringingrestorer.qml \
     qml/daemon/pages/FirstPage.qml \
     qml/daemon/pages/RestoreRingingDialog.qml \
     translations/*.ts \
-    harbour-ringingrestorer.desktop
+    harbour-ringingrestorer.desktop \
+    src/daemon/harbour-ringingrestorer.service
 
 # libiphb sources
 SOURCES += src/daemon/libiphb/src/libiphb.c
@@ -94,23 +96,9 @@ OTHER_FILES += \
 CONFIG += sailfishapp_i18n
 TRANSLATIONS += translations/HelloWorld-de.ts
 
-#TEMPLATE = subdirs
-
-#include("harbour-ringingrestorer-defines.pri")
-
-#SUBDIRS += app
-#SUBDIRS += daemon
-
-#system(rm -rf rpm/*)
-#system(mkdir -p rpm)
-
-#!contains(DEFINES, RR_JOLLA_STORE_CRIPPLED) {
-#    system(cp rpm.openrepos/* rpm/)
-#} else {
-#    system(cp rpm.jollastore/* rpm/)
-#}
-
-#OTHER_FILES += \
-#    rpm/harbour-ringingrestorer.yaml \
-#    rpm/harbour-ringingrestorer.changes \
-#    rpm/harbour-ringingrestorer.spec
+# Install systemd specific stuff for OpenRepos version to autostart
+!contains(DEFINES, RR_JOLLA_STORE_CRIPPLED) {
+    systemd.files = src/daemon/$${TARGET}.service
+    systemd.path = /usr/lib/systemd/user
+    INSTALLS += systemd
+}
