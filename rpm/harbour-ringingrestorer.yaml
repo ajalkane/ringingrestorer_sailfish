@@ -1,6 +1,6 @@
 Name: harbour-ringingrestorer
 Summary: RingingRestorer
-Version: 1.1
+Version: 1.2
 Release: 1
 # The contents of the Group field should be one of the groups listed here:
 # http://gitorious.org/meego-developer-tools/spectacle/blobs/master/data/GROUPS
@@ -46,7 +46,6 @@ Files:
   - '%{_datadir}/%{name}'
   - '%{_datadir}/applications/%{name}.desktop'
   - '%{_datadir}/icons/hicolor/86x86/apps/%{name}.png'
-  - '%{_libdir}/systemd/user/%{name}.service'
 
 # For more information about yaml and what's supported in Sailfish OS
 # build system, please see https://wiki.merproject.org/wiki/Spectacle

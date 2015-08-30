@@ -41,20 +41,20 @@ Dialog {
         }
     }
 
-    function restoreToMinutes(restore) {
-        var mins = 0;
-        if (restore <= 4) {
-            return restore * 15
-        } else if (restore <= 18) {
-            // One hour + upto 7 hours
-            return 60 + (restore - 4) * 30
-        }
-        // 8 hours++
-        return 480 + (restore - 18) * 60
+    function hourPartFromTotalMinutes(minutes) {
+        return Math.floor(minutes / 60)
+    }
+
+    function minutePartFromTotalMinutes(minutes) {
+        return minutes % 60
+    }
+
+    function restoreToMinutes() {
+        return restorePicker.hour * 60 + restorePicker.minute
     }
 
     function restoreText() {
-       var minutes = root.restoreToMinutes(restoreSlider.value)
+       var minutes = root.restoreToMinutes()
        var time = backend.timeCurrentPlusMinutes(minutes)
        return "Restore ringing in " + root.formatMinutes(minutes) + ", at " + time
     }
@@ -62,7 +62,7 @@ Dialog {
     onAccepted: {
         console.log("onAccepted")
         // At least for now, no restoring of volume on Sailfish
-        backend.restoreRingingIn(root.restoreToMinutes(restoreSlider.value), -1)
+        backend.restoreRingingIn(root.restoreToMinutes(), -1)
     }
     onRejected: {
         console.log("onRejected")
@@ -75,7 +75,6 @@ Dialog {
             console.log("Starting cancel timer")
             cancelTimer.countDown = 15
             cancelTimer.running = true
-            restoreSlider.refreshText()
         } else {
             console.log("Cancelling cancel timer")
             cancelTimer.running = false
@@ -84,10 +83,8 @@ Dialog {
 
     Column {
         anchors.fill: parent
-        spacing: 150
 
-        property int spaceBetweenSections: 40
-        property int sliderMargins: 50
+        spacing: 50
 
         DialogHeader {
             id: dialogHeader
@@ -99,25 +96,28 @@ Dialog {
             wrapMode: Text.WordWrap
             horizontalAlignment: Text.AlignHCenter
             width: parent.width
-            text: restoreSlider.label
+            text: restorePicker.label
         }
 
-        Slider {
-            id: restoreSlider
-            label: restoreText() // value + " minutes"
-            width: parent.width
-            minimumValue: 1;
-            maximumValue: 22;
-            value: 1 // Initial value
-            stepSize: 1
-            onValueChanged: {
+        TimePicker {
+            id: restorePicker
+
+            // Don't know why this don't work, so set x coordinate manually
+            // horizontalCenter: parent.horizontalCenter
+            x: parent.width / 2 - width / 2
+
+            hour: hourPartFromTotalMinutes(backend.lastRestoreRingingInMinutes())
+            minute: minutePartFromTotalMinutes(backend.lastRestoreRingingInMinutes())
+
+            property string label: restoreText()
+
+            onHourChanged: valueChanged();
+            onMinuteChanged: valueChanged();
+
+            function valueChanged() {
                 if (cancelTimer !== null) cancelTimer.running = false
-                refreshText()
-                // restoreLabel.refreshText()
             }
-            function refreshText() {
-                label = restoreText()
-            }
+
         }
 
         Timer {

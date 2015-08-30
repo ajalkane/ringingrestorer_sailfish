@@ -13,7 +13,7 @@ Name:       harbour-ringingrestorer
 %{!?qtc_make:%define qtc_make make}
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 Summary:    RingingRestorer
-Version:    1.1
+Version:    1.2
 Release:    1
 Group:      Qt/Qt
 License:    GPLv3
@@ -34,7 +34,6 @@ BuildRequires:  desktop-file-utils
 
 %description
 When changing to silent profile, RingingRestorer will display a dialog where you can quickly set when to restore ringing again.
-
 
 %prep
 %setup -q -n %{name}-%{version}
@@ -66,36 +65,11 @@ desktop-file-install --delete-original       \
   --dir %{buildroot}%{_datadir}/applications             \
    %{buildroot}%{_datadir}/applications/*.desktop
 
-%pre
-# >> pre
-su nemo -c "systemctl --user stop %{name}"
-exit 0
-# << pre
-
-%preun
-# >> preun
-su nemo -c "systemctl --user disable %{name}"
-su nemo -c "systemctl --user stop %{name}"
-# << preun
-
-%post
-# >> post
-su nemo -c "systemctl --user daemon-reload"
-su nemo -c "systemctl --user enable %{name}"
-su nemo -c "systemctl --user start %{name}"
-# << post
-
-%postun
-# >> postun
-su nemo -c "systemctl --user daemon-reload"
-# << postun
-
 %files
 %defattr(-,root,root,-)
 %{_bindir}
 %{_datadir}/%{name}
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/hicolor/86x86/apps/%{name}.png
-%{_libdir}/systemd/user/%{name}.service
 # >> files
 # << files
