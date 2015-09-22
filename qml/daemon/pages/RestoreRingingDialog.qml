@@ -60,9 +60,8 @@ Dialog {
     }
 
     onAccepted: {
-        console.log("onAccepted")
-        // At least for now, no restoring of volume on Sailfish
-        backend.restoreRingingIn(root.restoreToMinutes(), -1)
+        console.log("onAccepted, mins: " + root.restoreToMinutes() + ", volume: " + volumeSlider.value)
+        backend.restoreRingingIn(root.restoreToMinutes(), volumeSlider.value)
     }
     onRejected: {
         console.log("onRejected")
@@ -117,7 +116,20 @@ Dialog {
             function valueChanged() {
                 if (cancelTimer !== null) cancelTimer.running = false
             }
+        }
 
+        Slider {
+            id: volumeSlider
+            label: value + "% volume"
+            minimumValue: 20;
+            maximumValue: 100;
+            value: backend.lastRestoreRingingInVolume()
+            stepSize: 20
+            width: parent.width
+
+            onValueChanged: {
+                if (cancelTimer !== null) cancelTimer.running = false;
+            }
         }
 
         Timer {

@@ -32,6 +32,7 @@ class QmlDaemonBackend : public QObject
     QQuickView *_quickView;
 
     int _lastRestoreRingingInMinutes;
+    int _lastRestoreRingingInVolume;
 
 public:
     explicit QmlDaemonBackend(ProfileChangeWatcher *profileChangeWatcher,
@@ -44,6 +45,7 @@ public slots:
     void showTimeoutDialog();
     void restoreRingingIn(int minutes, int volume);
     inline int lastRestoreRingingInMinutes() { return _lastRestoreRingingInMinutes; }
+    inline int lastRestoreRingingInVolume() { return _lastRestoreRingingInVolume; }
 
     void close();
     QString timeCurrentPlusMinutes(int minutes);

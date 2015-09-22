@@ -2,6 +2,8 @@ harbour-ringingrestorer.pro.user
 
 src/daemon/generated
 
+rpm/
+
 *~
 
 *.autosave

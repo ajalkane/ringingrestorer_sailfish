@@ -34,7 +34,8 @@ QmlDaemonBackend::QmlDaemonBackend(ProfileChangeWatcher *profileChangeWatcher,
     QObject(parent),
     _profileChangeWatcher(profileChangeWatcher),
     _quickView(quickView),
-    _lastRestoreRingingInMinutes(15)
+    _lastRestoreRingingInMinutes(15),
+    _lastRestoreRingingInVolume(40)
 {
     connect(_profileChangeWatcher, SIGNAL(restoreRingingRequested()), SLOT(showTimeoutDialog()));
 }
@@ -75,6 +76,7 @@ QmlDaemonBackend::restoreRingingIn(int minutes, int volume) {
     _quickView->close();
     _profileChangeWatcher->restoreRingingIn(minutes, volume);
     _lastRestoreRingingInMinutes = minutes;
+    _lastRestoreRingingInVolume = volume;
 }
 
 void

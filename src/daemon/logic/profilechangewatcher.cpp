@@ -16,37 +16,52 @@
  * You should have received a copy of the GNU General Public License
  * along with RingingRestorer.  If not, see <http://www.gnu.org/licenses/>
 **/
+#include <QDebug>
+
 #include "profilechangewatcher.h"
 #include "../configuration.h"
 
+#define PROFILE_GENERAL "general"
 //#define PROFILE_RINGING "general"
 //#define PROFILE_BEEP "meeting"
 #define PROFILE_SILENT "silent"
+
+namespace {
+    QStringList watchedProfiles;
+}
 
 ProfileChangeWatcher::ProfileChangeWatcher(ProfileClient *profileClient, Preferences *preferences, QObject *parent) :
     QObject(parent), _profileClient(profileClient), _restoreVolume(40), _preferences(preferences)
 {
     _currentProfile = _profileClient->getProfile();
+    _restoreProfile = PROFILE_GENERAL;
 
     connect(&_timer, SIGNAL(timeout()), this, SLOT(_restoreRinging()));
 }
 
 void
 ProfileChangeWatcher::profileChanged(const QString &profile) {
-    _restoreProfile = _currentProfile;
-    _currentProfile = profile;
+    if (watchedProfiles.isEmpty()) {
+        watchedProfiles << PROFILE_GENERAL << PROFILE_SILENT;
+    }
 
-    qDebug("ProfileChangeWatcher::profileChanged '%s'' -> '%s'", qPrintable(_restoreProfile), qPrintable(profile));
-    if (!_preferences->isActive) {
-        qDebug("ProfileChangeWatcher::profileChanged not active, doing nothing");
+    const QString profileLower = profile.toLower();
+
+    if (!watchedProfiles.contains(profileLower)) {
+        qDebug() << Q_FUNC_INFO << "profile " << profile << "is not in" << watchedProfiles<< ", ignoring for restore profile";
         return;
     }
-    const QString profileLower = profile.toLower();
-    if (_restoreProfile.toLower() != PROFILE_SILENT && _restoreProfile != profile
-            && (profileLower == PROFILE_SILENT)) {
-        qDebug("ProfileChangeWatcher::profileChanged stopping and starting timer");
+
+    if (_currentProfile != profile && profileLower == PROFILE_SILENT) {
+        qDebug() << Q_FUNC_INFO << "stopping and starting timer";
         emit restoreRingingRequested();
+    } else {
+        qDebug() << Q_FUNC_INFO << "Changed to " << profile
+                 << "which is either different than currentProfile" << _currentProfile
+                 << "or is not silent profile" << PROFILE_SILENT;
     }
+
+    _currentProfile = profile;
 
     // ORIGINAL harmattan version
 //    if (previousProfile.toLower() == PROFILE_RINGING && previousProfile != profile
@@ -68,6 +83,8 @@ ProfileChangeWatcher::_restoreRinging() {
     if (_currentProfile.toLower() == PROFILE_SILENT) {
         qDebug("ProfileChangeWatcher::_restoreRinging, currentProfile '%s'", qPrintable(_currentProfile));
         _profileClient->setProfile(_restoreProfile);
+        // TODO
+        _profileClient->setProfileVolume(_restoreProfile, 40);
         if (_restoreVolume > -1) {
             _profileClient->setProfileVolume(_restoreProfile, _restoreVolume);
         }
