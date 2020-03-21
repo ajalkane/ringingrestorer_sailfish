@@ -1,3 +1,9 @@
+* Fri Mar 20 2020 Arto Jalkanen <ajalkane@gmail.com> 1.4-1
+- Recompile with new SDK so that works with Sailfish 3
+
+* Fri Sep 24 2015 Arto Jalkanen <ajalkane@gmail.com> 1.3-2
+- Do not show restore ringing if RingingRestorer is not active
+
 * Fri Sep 18 2015 Arto Jalkanen <ajalkane@gmail.com> 1.3-1
 - Sailfish 2.0 profile change support (currently no support for restoring previous Ambiance when silent ambiance selected)
 - Restoration of ringing volume to selected value

@@ -13,8 +13,8 @@ Name:       harbour-ringingrestorer
 %{!?qtc_make:%define qtc_make make}
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 Summary:    RingingRestorer
-Version:    1.3
-Release:    3
+Version:    1.4
+Release:    1
 Group:      Qt/Qt
 License:    GPLv3
 URL:        http://example.org/

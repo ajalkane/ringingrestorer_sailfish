@@ -44,29 +44,21 @@ void
 QmlDaemonBackend::showTimeoutDialog() {
     qDebug() << Q_FUNC_INFO;
     // Try making window get focus and appear
-    //_quickView->close();
-    // _quickView->create();
-
     _quickView->close();
     _quickView->create();
-    QPlatformNativeInterface *native =
-                     QGuiApplication::platformNativeInterface();
+    QPlatformNativeInterface *native = QGuiApplication::platformNativeInterface();
     native->setWindowProperty(_quickView->handle(),
-//                                  QLatin1String("CATEGORY"), QString(QLatin1String("alarm")));
-    QLatin1String("CATEGORY"), QString(QLatin1String("dialog")));
+    // This used to work:
+    // QLatin1String("CATEGORY"), QString(QLatin1String("dialog")));
+    // This works with 3.2.1.20 (Nuuksio)
+    QLatin1String("CATEGORY"), QString(QLatin1String("alarm")));
+    // This is something else that might be valid value, and perhaps will work in some future update when others don't :-D
+    // QLatin1String("CATEGORY"), QString(QLatin1String("notification")));
 
 
     // Copied from: https://github.com/sailfishos-patches/partnerspacemanager/blob/master/README.md
     _quickView->show();
 
-    // End
-//        qDebug() << Q_FUNC_INFO << "Calling show";
-//        view->show();
-
-    // _quickView->hide();
-//    _quickView->show();
-//    _quickView->raise();
-//    _quickView->requestActivate();
     emit openTimeoutDialog();
 }
 
