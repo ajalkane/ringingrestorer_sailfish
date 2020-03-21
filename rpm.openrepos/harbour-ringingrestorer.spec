@@ -74,8 +74,8 @@ exit 0
 
 %preun
 # >> preun
-su nemo -c "systemctl --user disable %{name}"
 su nemo -c "systemctl --user stop %{name}"
+su nemo -c "systemctl --user disable %{name}"
 # << preun
 
 %post
