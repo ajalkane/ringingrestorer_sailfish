@@ -1,3 +1,7 @@
+* Wed Mar 25 2020 Arto Jalkanen <ajalkane@gmail.com> 1.5
+- Fix automatic start on boot on Jolla C
+- Fix uninstall script so that service is started on reinstallation
+
 * Fri Mar 20 2020 Arto Jalkanen <ajalkane@gmail.com> 1.4-1
 - Recompile with new SDK so that works with Sailfish 3
 

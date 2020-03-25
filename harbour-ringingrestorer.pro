@@ -1,5 +1,5 @@
 # Enable RR_JOLLA_STORE_CRIPPLEd to build a version for Jolla Store
-DEFINES += RR_JOLLA_STORE_CRIPPLED
+# DEFINES += RR_JOLLA_STORE_CRIPPLED
 # If RR_TESTING enabled then restoration happens in seconds instead of minutes (ie. 60 times faster than what is selected)
 # DEFINES += RR_TESTING
 

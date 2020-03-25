@@ -13,7 +13,7 @@ Name:       harbour-ringingrestorer
 %{!?qtc_make:%define qtc_make make}
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 Summary:    RingingRestorer
-Version:    1.4
+Version:    1.5
 Release:    1
 Group:      Qt/Qt
 License:    GPLv3
@@ -68,26 +68,30 @@ desktop-file-install --delete-original       \
 
 %pre
 # >> pre
-su nemo -c "systemctl --user stop %{name}"
-exit 0
+if [ $1 -gt 1 ]; then
+    systemctl-user stop %{name} ||:
+    systemctl-user disable %{name} ||:
+fi
 # << pre
-
-%preun
-# >> preun
-su nemo -c "systemctl --user stop %{name}"
-su nemo -c "systemctl --user disable %{name}"
-# << preun
 
 %post
 # >> post
-su nemo -c "systemctl --user daemon-reload"
-su nemo -c "systemctl --user enable %{name}"
-su nemo -c "systemctl --user start %{name}"
+systemctl-user daemon-reload ||:
+systemctl-user enable %{name} ||:
+systemctl-user restart %{name} ||:
 # << post
+
+%preun
+# >> preun
+if [ $1 -lt 1 ]; then
+    systemctl-user stop %{name} ||:
+    systemctl-user disable %{name} ||:
+    systemctl-user daemon-reload ||:
+fi
+# << preun
 
 %postun
 # >> postun
-su nemo -c "systemctl --user daemon-reload"
 # << postun
 
 %files
