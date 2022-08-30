@@ -78,14 +78,15 @@ system(qdbusxml2cpp -p src/daemon/generated/mceiface/mceiface.h:src/daemon/gener
 
 # End of daemon portion
 
-system(rm -rf rpm/*)
-system(mkdir -p rpm)
 
-!contains(DEFINES, RR_JOLLA_STORE_CRIPPLED) {
-    system(cp rpm.openrepos/* rpm/)
-} else {
-    system(cp rpm.jollastore/* rpm/)
-}
+#system(rm -rf rpm/*)
+#system(mkdir -p rpm)
+
+#!contains(DEFINES, RR_JOLLA_STORE_CRIPPLED) {
+#    system(cp rpm.openrepos/* rpm/)
+#} else {
+#    system(cp rpm.jollastore/* rpm/)
+#}
 
 OTHER_FILES += \
     rpm/harbour-ringingrestorer.changes \
@@ -96,6 +97,7 @@ OTHER_FILES += \
 CONFIG += sailfishapp_i18n
 TRANSLATIONS += translations/HelloWorld-de.ts
 
+# Hmmm. I think I did this in the spec. poetaster
 # Install systemd specific stuff for OpenRepos version to autostart
 !contains(DEFINES, RR_JOLLA_STORE_CRIPPLED) {
     systemd.files = src/daemon/$${TARGET}.service
