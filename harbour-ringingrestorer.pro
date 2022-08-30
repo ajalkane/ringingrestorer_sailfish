@@ -60,7 +60,8 @@ OTHER_FILES += qml/app/harbour-ringingrestorer.qml \
     qml/daemon/pages/RestoreRingingDialog.qml \
     translations/*.ts \
     harbour-ringingrestorer.desktop \
-    src/daemon/harbour-ringingrestorer.service
+    src/daemon/harbour-ringingrestorer.service \
+    harbour-ringingrestorer.service
 
 # libiphb sources
 SOURCES += src/daemon/libiphb/src/libiphb.c
@@ -87,7 +88,6 @@ system(mkdir -p rpm)
 }
 
 OTHER_FILES += \
-    rpm/harbour-ringingrestorer.yaml \
     rpm/harbour-ringingrestorer.changes \
     rpm/harbour-ringingrestorer.spec
 
@@ -102,3 +102,5 @@ TRANSLATIONS += translations/HelloWorld-de.ts
     systemd.path = /usr/lib/systemd/user
     INSTALLS += systemd
 }
+
+DISTFILES +=

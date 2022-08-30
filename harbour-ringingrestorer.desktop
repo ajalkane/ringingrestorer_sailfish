@@ -4,3 +4,6 @@ X-Nemo-Application-Type=silica-qt5
 Icon=harbour-ringingrestorer
 Exec=harbour-ringingrestorer
 Name=RingingRestorer
+
+[X-Sailjail]
+Sandboxing=Disabled
