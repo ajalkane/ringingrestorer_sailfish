@@ -74,7 +74,7 @@ HEADERS += src/daemon/nemo-keepalive/lib/heartbeat.h
 INCLUDEPATH += $$PWD/src/daemon/include
 
 # BackgroundActivity
-system(qdbusxml2cpp -p src/daemon/generated/mceiface/mceiface.h:src/daemon/generated/mceiface/mceiface.cpp src/daemon/nemo-keepalive/lib/mceiface.xml)
+#system(qdbusxml2cpp -p src/daemon/generated/mceiface/mceiface.h:src/daemon/generated/mceiface/mceiface.cpp src/daemon/nemo-keepalive/lib/mceiface.xml)
 
 # End of daemon portion
 
