@@ -19,7 +19,7 @@ Group:      Qt/Qt
 License:    GPLv3
 URL:        http://example.org/
 Source0:    %{name}-%{version}.tar.bz2
-Source100:  harbour-ringingrestorer.yaml
+Source100:  harbour-ringingrestorer.service
 Requires:   sailfishsilica-qt5 >= 0.10.9
 BuildRequires:  pkgconfig(sailfishapp) >= 1.0.2
 BuildRequires:  pkgconfig(Qt5Core)
@@ -57,8 +57,9 @@ When changing to silent profile, RingingRestorer will display a dialog where you
 %install
 rm -rf %{buildroot}
 # >> install pre
-install -Dm 644 %{_sourcedir}/../src/daemon/%{name}.service \
+install -Dm 644 %{SOURCE100}  \
     %{buildroot}%{_userunitdir}/%{name}.service
+
 # << install pre
 %qmake5_install
 
