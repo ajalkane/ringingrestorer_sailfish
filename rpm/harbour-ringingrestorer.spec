@@ -13,11 +13,11 @@ Name:       harbour-ringingrestorer
 %{!?qtc_make:%define qtc_make make}
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 Summary:    RingingRestorer
-Version:    1.6
+Version:    1.7
 Release:    1
 Group:      Qt/Qt
 License:    GPLv3
-URL:        http://example.org/
+URL:        https://github.com/ajalkane/ringingrestorer_sailfish
 Source0:    %{name}-%{version}.tar.bz2
 Source100:  harbour-ringingrestorer.service
 Requires:   sailfishsilica-qt5 >= 0.10.9
@@ -32,10 +32,22 @@ BuildRequires:  pkgconfig(dbus-glib-1)
 BuildRequires:  pkgconfig(dsme)
 BuildRequires:  pkgconfig(mce) >= 1.12.3
 BuildRequires:  desktop-file-utils
+BuildRequires:  qt5-qttools-linguist
 
 %description
-When changing to silent profile, RingingRestorer will display a dialog where you can quickly set when to restore ringing again.
+When changing to silent profile, RingingRestorer will display a dialog
+where you can quickly set when to restore ringing again.
 
+%if "%{?vendor}" == "chum"
+PackageName: ringingrestorer
+Type: desktop-application
+Categories:
+ - Utility
+DeveloperName: ajalkane
+PackagerName: Mark Washeim (poetaster)
+Custom:
+ - Repo: https://github.com/poetaster/ringingrestorer_sailfish
+%endif
 
 %prep
 %setup -q -n %{name}-%{version}
